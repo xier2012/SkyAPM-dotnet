@@ -36,12 +36,12 @@ using System.Linq;
         
         private readonly ITracingContext _tracingContext;
 
-        public StackExchangeRedis(IServiceProvider serviceProvider) : base(serviceProvider)
+        public StackExchangeRedis(ITracingContext tracingContext)
         {
-            _tracingContext = (ITracingContext)serviceProvider.GetService(typeof(ITracingContext));
+            _tracingContext = tracingContext;
         }
 
-        public override EndMethodDelegate BeforeWrappedMethod(TraceMethodInfo traceMethodInfo)
+        public override AfterMethodDelegate BeginWrapMethod(TraceMethodInfo traceMethodInfo)
         {
             var multiplexer = traceMethodInfo.InvocationTarget;
             var message = traceMethodInfo.MethodArguments[0];
@@ -72,6 +72,8 @@ using System.Linq;
                 return delegate (object returnValue, Exception ex)
                 {
                     DelegateHelper.AsyncMethodEnd(Leave, traceMethodInfo, ex, returnValue);
+
+                    _tracingContext.ReleaseScope();
                 };
             }
         }

@@ -31,12 +31,12 @@ namespace SkyApm.ClrProfiler.Trace.AspNet
 
         private readonly ITracingContext _tracingContext;        
 
-        public HttpContextFinishPipelineRequest(IServiceProvider serviceProvider) : base(serviceProvider)
+        public HttpContextFinishPipelineRequest(ITracingContext tracingContext)
         {
-            _tracingContext = (ITracingContext)serviceProvider.GetService(typeof(ITracingContext));
+            _tracingContext = tracingContext;
         }
 
-        public override EndMethodDelegate BeforeWrappedMethod(TraceMethodInfo traceMethodInfo)
+        public override AfterMethodDelegate BeginWrapMethod(TraceMethodInfo traceMethodInfo)
         {
             if (HttpRuntime.UsingIntegratedPipeline)
             {

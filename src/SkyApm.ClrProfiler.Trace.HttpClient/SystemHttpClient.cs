@@ -34,12 +34,12 @@ namespace SkyApm.ClrProfiler.Trace.HttpClient
 
         private readonly ITracingContext _tracingContext;
 
-        public SystemHttpClient(IServiceProvider serviceProvider) : base(serviceProvider)
+        public SystemHttpClient(ITracingContext tracingContext)
         {
-            _tracingContext = (ITracingContext)serviceProvider.GetService(typeof(ITracingContext));
+            _tracingContext = tracingContext;
         }
 
-        public override EndMethodDelegate BeforeWrappedMethod(TraceMethodInfo traceMethodInfo)
+        public override AfterMethodDelegate BeginWrapMethod(TraceMethodInfo traceMethodInfo)
         {
             var request = (HttpRequestMessage)traceMethodInfo.MethodArguments[0];
 
@@ -57,6 +57,8 @@ namespace SkyApm.ClrProfiler.Trace.HttpClient
             return delegate(object returnValue, Exception ex)
             { 
                 DelegateHelper.AsyncMethodEnd(Leave, traceMethodInfo, ex, returnValue);
+
+                _tracingContext.ReleaseScope();
             };
         }
 

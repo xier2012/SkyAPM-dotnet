@@ -59,9 +59,7 @@ namespace SkyApm.ClrProfiler.Trace.Extensions
             services.AddSingleton<ICarrierFormatter, Sw3CarrierFormatter>();
             services.AddSingleton<ICarrierFormatter, Sw6CarrierFormatter>();
             services.AddSingleton<ISegmentContextFactory, SegmentContextFactory>();
-            services.AddSingleton<IEntrySegmentContextAccessor, EntrySegmentContextAccessor>();
-            services.AddSingleton<ILocalSegmentContextAccessor, LocalSegmentContextAccessor>();
-            services.AddSingleton<IExitSegmentContextAccessor, ExitSegmentContextAccessor>();
+            services.AddSingleton<ISegmentContextScopeManager, SegmentContextScopeManager>();
             services.AddSingleton<ISamplerChainBuilder, SamplerChainBuilder>();
             services.AddSingleton<IUniqueIdGenerator, UniqueIdGenerator>();
             services.AddSingleton<IUniqueIdParser, UniqueIdParser>();
@@ -112,6 +110,50 @@ namespace SkyApm.ClrProfiler.Trace.Extensions
             services.AddSingleton(typeof(IServiceRegister), assembly.GetType("SkyApm.Transport.Grpc.V6.ServiceRegister"));
             services.AddSingleton(typeof(IExecutionService), assembly.GetType("SkyApm.Transport.Grpc.V6.ConnectService"));
             services.AddSingleton(assembly.GetType("SkyApm.Transport.Grpc.ConnectionManager"));
+            return services;
+        }
+
+        /// <summary>
+        /// AddMethodWrapperTypes
+        /// </summary>
+        /// <param name="services"></param>
+        public static IServiceCollection AddMethodWrapperTypes(this IServiceCollection services)
+        {
+            var profilerHome = TraceEnvironment.Instance.GetProfilerHome();
+            foreach (var dllPath in Directory.GetFiles(profilerHome, "*.dll"))
+            {
+                try
+                {
+                    var fileName = Path.GetFileName(dllPath);
+                    if (fileName.StartsWith("SkyApm.ClrProfiler.Trace", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var assembly = Assembly.Load(fileName.Replace(".dll", ""));
+                        if (assembly != null)
+                        {
+                            AddMethodWrapperTypes(assembly);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Trace.WriteLine(ex);
+                }
+            }
+
+            void AddMethodWrapperTypes(Assembly assembly)
+            {
+                var types = assembly.GetTypes();
+                foreach (var type in types)
+                {
+                    if (typeof(AbsMethodWrapper).IsAssignableFrom(type) &&
+                        type.IsClass && !type.IsAbstract && 
+                        type != typeof(NoopMethodWrapper))
+                    {
+                        services.AddSingleton(typeof(IMethodWrapper), type);
+                    }
+                }
+            }
+
             return services;
         }
     }

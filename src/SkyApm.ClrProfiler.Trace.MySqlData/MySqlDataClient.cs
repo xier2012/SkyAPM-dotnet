@@ -34,12 +34,12 @@ using System.Linq;
 
         private readonly ITracingContext _tracingContext;
 
-        public MySqlDataClient(IServiceProvider serviceProvider) : base(serviceProvider)
+        public MySqlDataClient(ITracingContext tracingContext)
         {
-            _tracingContext = (ITracingContext)serviceProvider.GetService(typeof(ITracingContext));
+            _tracingContext = tracingContext;
         }
 
-        public override EndMethodDelegate BeforeWrappedMethod(TraceMethodInfo traceMethodInfo)
+        public override AfterMethodDelegate BeginWrapMethod(TraceMethodInfo traceMethodInfo)
         {
             var dbCommand = (DbCommand)traceMethodInfo.InvocationTarget;
 

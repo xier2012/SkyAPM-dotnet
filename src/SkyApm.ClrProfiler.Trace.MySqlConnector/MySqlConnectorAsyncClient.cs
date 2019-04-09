@@ -34,12 +34,12 @@ using System.Linq;
 
         private readonly ITracingContext _tracingContext;
 
-        public MySqlConnectorAsyncClient(IServiceProvider serviceProvider) : base(serviceProvider)
+        public MySqlConnectorAsyncClient(ITracingContext tracingContext)
         {
-            _tracingContext = (ITracingContext)serviceProvider.GetService(typeof(ITracingContext));
+            _tracingContext = tracingContext;
         }
 
-        public override EndMethodDelegate BeforeWrappedMethod(TraceMethodInfo traceMethodInfo)
+        public override AfterMethodDelegate BeginWrapMethod(TraceMethodInfo traceMethodInfo)
         {
             var dbCommand = (DbCommand)traceMethodInfo.InvocationTarget;
 
@@ -57,6 +57,8 @@ using System.Linq;
             return delegate (object returnValue, Exception ex)
             {
                 DelegateHelper.AsyncMethodEnd(Leave, traceMethodInfo, ex, returnValue);
+
+                _tracingContext.ReleaseScope();
             };
         }
 
