@@ -17,16 +17,12 @@
  */
 
 using Microsoft.Extensions.Hosting;
+using SkyApm.Agent.Hosting;
 
 namespace SkyApm.Agent.GeneralHost
 {
-    internal class HostingEnvironmentProvider : IEnvironmentProvider
+    public static class HostBuilderExtensions
     {
-        public string EnvironmentName { get; }
-
-        public HostingEnvironmentProvider(IHostingEnvironment hostingEnvironment)
-        {
-            EnvironmentName = hostingEnvironment.EnvironmentName;
-        }
+        public static IHostBuilder AddSkyAPM(this IHostBuilder builder) => builder.UseSkyAPM();
     }
 }

@@ -16,15 +16,21 @@
  *
  */
 
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-namespace SkyApm.Agent.AspNetCore
+#if NETSTANDARD2_0
+
+using IHostEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
+
+#endif
+
+namespace SkyApm.Agent.Hosting
 {
     internal class HostingEnvironmentProvider : IEnvironmentProvider
     {
         public string EnvironmentName { get; }
 
-        public HostingEnvironmentProvider(IHostingEnvironment hostingEnvironment)
+        public HostingEnvironmentProvider(IHostEnvironment hostingEnvironment)
         {
             EnvironmentName = hostingEnvironment.EnvironmentName;
         }

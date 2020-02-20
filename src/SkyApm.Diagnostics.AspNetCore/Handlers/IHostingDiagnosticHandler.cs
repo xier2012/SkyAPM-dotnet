@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Licensed to the SkyAPM under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,29 +16,18 @@
  *
  */
 
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
+using SkyApm.Tracing;
+using SkyApm.Tracing.Segments;
 
-namespace SkyApm.Agent.AspNetCore
+namespace SkyApm.Diagnostics.AspNetCore.Handlers
 {
-    internal class InstrumentationHostedService : IHostedService
+    public interface IHostingDiagnosticHandler
     {
-        private readonly IInstrumentStartup _startup;
+        bool OnlyMatch(HttpContext httpContext);
 
-        public InstrumentationHostedService(IInstrumentStartup startup)
-        {
-            _startup = startup;
-        }
+        void BeginRequest(ITracingContext tracingContext, HttpContext httpContext);
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            return _startup.StartAsync(cancellationToken);
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return _startup.StopAsync(cancellationToken);
-        }
+        void EndRequest(SegmentContext segmentContext, HttpContext httpContext);
     }
 }

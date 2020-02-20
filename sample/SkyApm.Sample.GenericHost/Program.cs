@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SkyApm.Agent.GeneralHost;
 
-namespace SkyApm.Sample.GeneralHost
+namespace SkyApm.Sample.GenericHost
 {
     public class Program
     {

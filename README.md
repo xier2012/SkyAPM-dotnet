@@ -22,7 +22,8 @@ SkyAPM C#/.NET instrument agent
 | Package Name |  NuGet | MyGet | Downloads 
 |--------------|  ------- |  ------- |  ---- 
 | SkyAPM.Agent.AspNetCore | [![nuget](https://img.shields.io/nuget/v/SkyAPM.Agent.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/SkyAPM.Agent.AspNetCore) | [![myget](https://img.shields.io/myget/skyapm-dotnet/vpre/SkyAPM.Agent.AspNetCore.svg?style=flat-square)](https://www.myget.org/feed/skyapm-dotnet/package/nuget/SkyAPM.Agent.AspNetCore) | [![stats](https://img.shields.io/nuget/dt/SkyAPM.Agent.AspNetCore.svg?style=flat-square)](https://www.nuget.org/stats/packages/SkyAPM.Agent.AspNetCore?groupby=Version) 
-| SkyAPM.Agent.AspNet | [![nuget](https://img.shields.io/nuget/v/SkyAPM.Agent.AspNet.svg?style=flat-square)](https://www.nuget.org/packages/SkyAPM.Agent.AspNet) | [![myget](https://img.shields.io/myget/skyapm-dotnet/vpre/SkyAPM.Agent.AspNet.svg?style=flat-square)](https://www.myget.org/feed/skyapm-dotnet/package/nuget/SkyAPM.Agent.AspNet) | [![](https://img.shields.io/nuget/dt/SkyAPM.Agent.AspNet.svg?style=flat-square)](https://www.nuget.org/stats/packages/SkyAPM.Agent.AspNet?groupby=Version)  
+| SkyAPM.Agent.AspNet | [![nuget](https://img.shields.io/nuget/v/SkyAPM.Agent.AspNet.svg?style=flat-square)](https://www.nuget.org/packages/SkyAPM.Agent.AspNet) | [![myget](https://img.shields.io/myget/skyapm-dotnet/vpre/SkyAPM.Agent.AspNet.svg?style=flat-square)](https://www.myget.org/feed/skyapm-dotnet/package/nuget/SkyAPM.Agent.AspNet) | [![](https://img.shields.io/nuget/dt/SkyAPM.Agent.AspNet.svg?style=flat-square)](https://www.nuget.org/stats/packages/SkyAPM.Agent.AspNet?groupby=Version)
+| SkyAPM.Agent.GeneralHost | [![nuget](https://img.shields.io/nuget/v/SkyAPM.Agent.GeneralHost.svg?style=flat-square)](https://www.nuget.org/packages/SkyAPM.Agent.GeneralHost) | [![myget](https://img.shields.io/myget/skyapm-dotnet/vpre/SkyAPM.Agent.GeneralHost.svg?style=flat-square)](https://www.myget.org/feed/skyapm-dotnet/package/nuget/SkyAPM.Agent.GeneralHost) | [![](https://img.shields.io/nuget/dt/SkyAPM.Agent.GeneralHost.svg?style=flat-square)](https://www.nuget.org/stats/packages/SkyAPM.Agent.GeneralHost?groupby=Version)  
 
 > MyGet feed URL https://www.myget.org/F/skyapm-dotnet/api/v3/index.json
 
@@ -105,8 +106,12 @@ This section is in progress here: [Contributing to SkyAPM-dotnet](/CONTIBUTING.m
 
 # Contact Us
 * Submit an issue
-* [Gitter](https://gitter.im/openskywalking/Lobby) English
-* QQ Group(cn): 392443393
+
+If you have issues about SkyWalking protocol, its official backend, ask questions at their Apache official channels. All following channels are not suitable for .net agent, but good if you are facing backend/UI issues.
+* Submit an official Apache SkyWalking [issue](https://github.com/apache/skywalking/issues). 
+* Mail list: **dev@skywalking.apache.org**. Mail to `dev-subscribe@skywalking.apache.org`, follow the reply to subscribe the mail list.
+* Join `skywalking` channel at [Apache Slack](https://join.slack.com/t/the-asf/shared_invite/enQtNzc2ODE3MjI1MDk1LTAyZGJmNTg1NWZhNmVmOWZjMjA2MGUyOGY4MjE5ZGUwOTQxY2Q3MDBmNTM5YTllNGU4M2QyMzQ4M2U4ZjQ5YmY). If the link is not working, find the latest one at [Apache INFRA WIKI](https://cwiki.apache.org/confluence/display/INFRA/Slack+Guest+Invites).
+* QQ Group: 392443393(2000/2000, not available), 901167865(available)
 
 # License
 [Apache 2.0 License.](/LICENSE)
